@@ -25,7 +25,7 @@ class UserRepository {
                    loginRespons.value = response.body()?.string()
                } else {
 
-                   loginRespons.value = response.body()?.string()
+                   loginRespons.value = response.errorBody()?.string()
                }
 
            }

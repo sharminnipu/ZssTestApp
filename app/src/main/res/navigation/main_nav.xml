@@ -10,4 +10,13 @@
         android:name="com.sharmin.zsstestapp.ui.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
+
+    <fragment
+        android:id="@+id/recyclerViewFragment"
+        android:name="com.sharmin.zsstestapp.ui.EventRecyclerViewFragment"
+        android:label="recyclerview_fragment"
+        tools:layout="@layout/event_recycler_view_fragment" />
+
+
+
 </navigation>

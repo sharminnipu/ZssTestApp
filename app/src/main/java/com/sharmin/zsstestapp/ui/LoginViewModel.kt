@@ -3,6 +3,7 @@ package com.sharmin.zsstestapp.ui
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.sharmin.zsstestapp.authlistener.AuthListener
+import com.sharmin.zsstestapp.data.UserRepository
 
 class LoginViewModel : ViewModel() {
 
@@ -12,11 +13,18 @@ class LoginViewModel : ViewModel() {
 
 
     fun onLoginButtonClick(view: View){
+        authListener?.onStarted()
         if (email.isNullOrEmpty() || password.isNullOrEmpty()){
-      authListener?.onFailure("Invaild password or email")
+        authListener?.onFailure("Invaild password or email")
             return
         }
-       authListener?.onSuccess()
+       //authListener?.onSuccess()
+
+        //add userRepository//
+        val loginResponse= UserRepository().userLogin(email!!,password!!)
+
+        authListener?.onSuccess(loginResponse)
+
 
     }
 

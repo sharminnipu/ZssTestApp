@@ -1,5 +1,6 @@
 package com.sharmin.zsstestapp.ui
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.sharmin.zsstestapp.R
-import com.sharmin.zsstestapp.authlistener.AuthListener
 import com.sharmin.zsstestapp.authlistener.toast
+import com.sharmin.zsstestapp.authlistener.AuthListener
+
 import com.sharmin.zsstestapp.databinding.LoginFragmentBinding
 
 class LoginFragment : Fragment(),AuthListener {
@@ -28,11 +32,11 @@ class LoginFragment : Fragment(),AuthListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-    val bindingUtil:LoginFragmentBinding=DataBindingUtil.setContentView(requireActivity(),R.layout.login_fragment)
+    val binding:LoginFragmentBinding=DataBindingUtil.setContentView(requireActivity(),R.layout.login_fragment)
 
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
-        bindingUtil.viewmodel=viewModel
+        binding.viewmodel=viewModel
         viewModel.authListener=this
 
     }
@@ -42,8 +46,12 @@ class LoginFragment : Fragment(),AuthListener {
 
     }
 
-    override fun onSuccess() {
-        Toast.makeText(requireContext(),"Login Success",Toast.LENGTH_LONG).show()
+    override fun onSuccess(loginResponse:LiveData<String>) {
+        loginResponse.observe(this, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+
+        })
+
     }
 
     override fun onFailure(message: String) {
